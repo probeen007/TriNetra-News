@@ -6,14 +6,14 @@ export default function About() {
       <div className='max-w-2xl mx-auto p-3 text-center'>
         <div>
           <h1 className='text-3xl font font-semibold text-center my-7'>
-            About Sahand's Blog
+            About TriNetra Post
           </h1>
           <div className='text-md text-gray-500 flex flex-col gap-6'>
             <p>
-              Welcome to Sahand's Blog! This blog was created by Sahand Ghavidel
-              as a personal project to share his thoughts and ideas with the
-              world. Sahand is a passionate developer who loves to write about
-              technology, coding, and everything in between.
+              Trinetra Post is a dynamic press website dedicated to delivering timely,
+              accurate, and engaging news coverage. With a commitment to keeping readers informed,
+              it serves as a trusted digital platform for breaking stories, in-depth articles, and thoughtful analysis.
+              The platform covers a wide range of topics, from politics and social issues to culture, sports, and technology, ensuring that readers have access to diverse perspectives and well-rounded reporting.
             </p>
 
             <p>

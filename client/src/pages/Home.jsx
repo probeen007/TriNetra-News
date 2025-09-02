@@ -19,7 +19,7 @@ export default function Home() {
       <div className='flex flex-col gap-6 p-10  px-3 max-w-6xl mx-auto '>
         <h1 className='text-3xl font-bold lg:text-6xl pt-10'> Latest Nepal news in one touch</h1>
         <p className='text-gray-500 text-xs sm:text-sm'>
-          Mahesh News delivers fast, reliable, and unbiased updates on current events, politics, sports, technology, and entertainment, keeping you informed anytime, anywhere.
+          TriNetra Post delivers fast, reliable, and unbiased updates on current events, politics, sports, technology, and entertainment, keeping you informed anytime, anywhere.
         </p>
         <Link
           to='/search'

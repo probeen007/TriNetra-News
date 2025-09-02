@@ -11,7 +11,7 @@ export default function CallToAction() {
           Latest trending news bulletin
         </p>
         <a
-          href='https://www.100jsprojects.com/'
+          href='#'
           target='_blank'
           rel='noopener noreferrer'
         >
@@ -24,7 +24,7 @@ export default function CallToAction() {
         </a>
       </div>
       <div className='flex-1 p-7'>
-        <img src='https://media.geeksforgeeks.org/wp-content/cdn-uploads/20221114110410/Top-10-JavaScript-Project-Ideas-For-Beginners-2023.png' />
+        <img src='https://i.postimg.cc/nhSf20p3/Chat-GPT-Image-Sep-2-2025-06-17-10-PM.png' />
       </div>
     </div>
   );
