@@ -49,13 +49,12 @@ export default function SignIn() {
         <div className='flex-1'>
           <Link to='/' className='font-bold dark:text-white text-4xl'>
             <span className='px-2 py-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-lg text-white'>
-              Sahand's
+              TriNetra
             </span>
-            Blog
+            Post
           </Link>
           <p className='text-sm mt-5'>
-            This is a demo project. You can sign in with your email and password
-            or with Google.
+            fast, reliable, and unbiased updates on current events, politics, sports, technology, and entertainment, keeping you informed anytime, anywhere.
           </p>
         </div>
         {/* right */}

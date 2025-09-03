@@ -17,17 +17,11 @@ export default function About() {
             </p>
 
             <p>
-              On this blog, you'll find weekly articles and tutorials on topics
-              such as web development, software engineering, and programming
-              languages. Sahand is always learning and exploring new
-              technologies, so be sure to check back often for new content!
+              At TriNetra Post, we believe in the power of journalism to inform, inspire, and drive positive change. Our team is dedicated to uncovering the truth and providing our audience with the information they need to make informed decisions.
             </p>
 
             <p>
-              We encourage you to leave comments on our posts and engage with
-              other readers. You can like other people's comments and reply to
-              them as well. We believe that a community of learners can help
-              each other grow and improve.
+              Whether you're looking for the latest headlines or in-depth features, TriNetra Post is your go-to source for reliable news and insightful commentary. Join us on our mission to inform and engage readers around the world. 
             </p>
           </div>
         </div>
