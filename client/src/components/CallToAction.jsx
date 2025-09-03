@@ -8,7 +8,7 @@ export default function CallToAction() {
 
   const fetchData = async () => {
     try {
-      const res = await fetch("http://localhost:3000/api/market/all");
+      const res = await fetch("https://trinetra-news.onrender.com/api/market/all");
       const data = await res.json();
       if (!res.ok) throw new Error("Market fetch failed");
 
