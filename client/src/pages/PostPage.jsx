@@ -1,9 +1,13 @@
-import { Button, Spinner } from 'flowbite-react';
+import { Button, Spinner, Dropdown } from 'flowbite-react';
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import CallToAction from '../components/CallToAction';
 import CommentSection from '../components/CommentSection';
 import PostCard from '../components/PostCard';
+import NepaliDate from "nepali-date-converter";
+
+// Icons
+import { Share2, Facebook, Instagram, Twitter, Link as LinkIcon, MessageCircle } from "lucide-react";
 
 export default function PostPage() {
   const { postSlug } = useParams();
@@ -57,6 +61,7 @@ export default function PostPage() {
         <Spinner size='xl' />
       </div>
     );
+
   return (
     <main className='p-3 flex flex-col max-w-6xl mx-auto min-h-screen'>
       <h1 className='text-3xl mt-10 p-3 text-center font-serif max-w-2xl mx-auto lg:text-4xl'>
@@ -75,16 +80,102 @@ export default function PostPage() {
         alt={post && post.title}
         className='mt-10 p-3 max-h-[600px] w-full object-cover'
       />
-      <div className='flex justify-between p-3 border-b border-slate-500 mx-auto w-full max-w-2xl text-xs'>
-        <span>{post && new Date(post.createdAt).toLocaleDateString()}</span>
+
+      {/* Date + Share + Read time */}
+      <div className='flex justify-between items-center p-3 border-b border-slate-500 mx-auto w-full max-w-2xl text-xs'>
+        {/* Nepali Date */}
+        <span>
+          {post && (() => {
+            const date = new Date(post.createdAt);
+            const nepaliDate = new NepaliDate(date);
+
+            const months = [
+              "बैशाख", "जेठ", "असार", "साउन", "भदौ", "असोज",
+              "कार्तिक", "मंसिर", "पुष", "माघ", "फागुन", "चैत"
+            ];
+            const weekdays = [
+              "आइतबार", "सोमबार", "मङ्गलबार", "बुधबार",
+              "बिहीबार", "शुक्रबार", "शनिबार"
+            ];
+            const toNepaliNumber = (num) =>
+              num.toString().replace(/[0-9]/g, (d) => "०१२३४५६७८९"[d]);
+
+            const year = toNepaliNumber(nepaliDate.getYear());
+            const month = months[nepaliDate.getMonth()];
+            const day = toNepaliNumber(nepaliDate.getDate());
+            const weekday = weekdays[nepaliDate.getDay()];
+
+            return `${weekday}, ${month} ${day}, ${year}`;
+          })()}
+        </span>
+
+        {/* Share Button */}
+        <Dropdown
+          inline
+          label={
+            <div className="flex items-center gap-2 font-bold">
+              <Share2 className="w-4 h-4" />
+              <span>Share</span>
+            </div>}
+          arrowIcon={false}
+        >
+          <Dropdown.Item
+            onClick={() => window.open(
+              `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`,
+              "_blank"
+            )}
+          >
+            <Facebook className="w-4 h-4 mr-2" /> Facebook
+          </Dropdown.Item>
+
+          <Dropdown.Item
+            onClick={() => window.open(
+              `https://twitter.com/intent/tweet?url=${encodeURIComponent(window.location.href)}&text=${post?.title}`,
+              "_blank"
+            )}
+          >
+            <Twitter className="w-4 h-4 mr-2" /> Twitter (X)
+          </Dropdown.Item>
+
+          <Dropdown.Item
+            onClick={() => window.open(
+              `https://api.whatsapp.com/send?text=${post?.title} ${encodeURIComponent(window.location.href)}`,
+              "_blank"
+            )}
+          >
+            <MessageCircle className="w-4 h-4 mr-2" /> WhatsApp
+          </Dropdown.Item>
+
+          <Dropdown.Item
+            onClick={() => window.open(
+              `https://www.instagram.com/`,
+              "_blank"
+            )}
+          >
+            <Instagram className="w-4 h-4 mr-2" /> Instagram
+          </Dropdown.Item>
+
+          <Dropdown.Item
+            onClick={() => {
+              navigator.clipboard.writeText(window.location.href);
+              alert("Link copied to clipboard!");
+            }}
+          >
+            <LinkIcon className="w-4 h-4 mr-2" /> Copy Link
+          </Dropdown.Item>
+        </Dropdown>
+
+        {/* Read Time */}
         <span className='italic'>
           {post && (post.content.length / 1000).toFixed(0)} mins read
         </span>
       </div>
+
       <div
         className='p-3 max-w-2xl mx-auto w-full post-content'
         dangerouslySetInnerHTML={{ __html: post && post.content }}
       ></div>
+
       <div className='max-w-4xl mx-auto w-full'>
         <CallToAction />
       </div>

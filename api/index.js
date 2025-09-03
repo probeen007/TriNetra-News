@@ -7,6 +7,10 @@ import postRoutes from './routes/post.route.js';
 import commentRoutes from './routes/comment.route.js';
 import cookieParser from 'cookie-parser';
 import path from 'path';
+import cors from "cors";
+
+// ✅ Import your market routes
+import marketRoutes from "./routes/marketRoutes.js";
 
 dotenv.config();
 
@@ -20,27 +24,28 @@ mongoose
   });
 
 const __dirname = path.resolve();
-
 const app = express();
 
+app.use(cors()); // ✅ allow frontend requests
 app.use(express.json());
 app.use(cookieParser());
 
-app.listen(3000, () => {
-  console.log('Server is running on port 3000!');
-});
-
+// ✅ Register API routes
 app.use('/api/user', userRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/post', postRoutes);
 app.use('/api/comment', commentRoutes);
 
-app.use(express.static(path.join(__dirname, '/client/dist')));
+// ✅ Add your new market routes (NEPSE + Gold)
+app.use('/api/market', marketRoutes);
 
+// Serve frontend
+app.use(express.static(path.join(__dirname, '/client/dist')));
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'));
 });
 
+// Global error handler
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;
   const message = err.message || 'Internal Server Error';
@@ -49,4 +54,8 @@ app.use((err, req, res, next) => {
     statusCode,
     message,
   });
+});
+
+app.listen(3000, () => {
+  console.log('✅ Server is running on port 3000!');
 });

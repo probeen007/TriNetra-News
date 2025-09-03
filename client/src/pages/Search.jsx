@@ -131,9 +131,9 @@ export default function Search() {
               id='category'
             >
               <option value='uncategorized'>Uncategorized</option>
-              <option value='reactjs'>International</option>
-              <option value='nextjs'>National</option>
-              <option value='javascript'>Local</option>
+              <option value='international'>International</option>
+              <option value='national'>National</option>
+              <option value='local'>Local</option>
             </Select>
           </div>
           <Button type='submit' outline gradientDuoTone='purpleToPink'>
