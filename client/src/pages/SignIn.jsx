@@ -48,10 +48,11 @@ export default function SignIn() {
         {/* left */}
         <div className='flex-1'>
           <Link to='/' className='font-bold dark:text-white text-4xl'>
-            <span className='px-2 py-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-lg text-white'>
-              TriNetra
-            </span>
-            Post
+
+            <img src="https://i.postimg.cc/G2wn9kKH/dark.png"
+              alt="Trinetra Post Logo"
+              className="h-20 w-auto object-contain" />
+
           </Link>
           <p className='text-sm mt-5'>
             fast, reliable, and unbiased updates on current events, politics, sports, technology, and entertainment, keeping you informed anytime, anywhere.

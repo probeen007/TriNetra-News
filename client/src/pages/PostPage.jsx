@@ -75,6 +75,8 @@ export default function PostPage() {
           {post && post.category}
         </Button>
       </Link>
+      <hr className="border-gray-300 dark:border-gray-600 mt-5" />
+
       <img
         src={post && post.image}
         alt={post && post.title}
@@ -119,6 +121,16 @@ export default function PostPage() {
             </div>}
           arrowIcon={false}
         >
+          <Dropdown.Item
+            onClick={() => window.open(
+              `https://www.messenger.com/t/?link=${encodeURIComponent(window.location.href)}`,
+              "_blank"
+            )}
+          >
+            <MessageCircle className="w-4 h-4 mr-2" /> Messenger
+          </Dropdown.Item>
+
+
           <Dropdown.Item
             onClick={() => window.open(
               `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`,
@@ -175,14 +187,18 @@ export default function PostPage() {
         className='p-3 max-w-2xl mx-auto w-full post-content'
         dangerouslySetInnerHTML={{ __html: post && post.content }}
       ></div>
+      <hr className="border-gray-300 dark:border-gray-600 mb-4" />
 
       <div className='max-w-4xl mx-auto w-full'>
         <CallToAction />
       </div>
+      <hr className="border-gray-300 dark:border-gray-600 mt-5" />
+
       <CommentSection postId={post._id} />
 
       <div className='flex flex-col justify-center items-center mb-5'>
         <h1 className='text-xl mt-5'>Recent articles</h1>
+
         <div className='flex flex-wrap gap-5 mt-5 justify-center'>
           {recentPosts &&
             recentPosts.map((post) => <PostCard key={post._id} post={post} />)}

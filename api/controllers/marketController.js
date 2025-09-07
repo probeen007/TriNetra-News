@@ -45,17 +45,33 @@ export const getMarketData = async (req, res) => {
         });
 
         // ----- NEPSE -----
-        // Using a simple public JSON endpoint
+
         let nepseIndex = "-";
         try {
             const nepseResponse = await fetch("https://nepalstock.onrender.com/nepse-index");
             if (nepseResponse.ok) {
                 const nepseData = await nepseResponse.json();
-                nepseIndex = nepseData.index || "-";
+                //console.log("NEPSE raw response:", JSON.stringify(nepseData, null, 2));
+
+                if (Array.isArray(nepseData)) {
+                    const nepseObj = nepseData.find(item => item.index === "NEPSE Index");
+                    if (nepseObj) {
+                        nepseIndex = nepseObj.currentValue || nepseObj.close || "-";
+                    } else {
+                        console.error("NEPSE Index not found in array");
+                    }
+                } else {
+                    console.error("Unexpected NEPSE response format");
+                }
+            } else {
+                console.error("NEPSE fetch failed:", nepseResponse.status);
             }
         } catch (e) {
             console.error("NEPSE fetch error:", e.message);
         }
+
+
+
 
         res.json({ gold, silver, nepseIndex });
     } catch (err) {
