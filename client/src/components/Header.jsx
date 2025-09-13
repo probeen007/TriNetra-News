@@ -26,9 +26,7 @@ export default function Header() {
 
   const handleSignout = async () => {
     try {
-      const res = await fetch('/api/user/signout', {
-        method: 'POST',
-      });
+      const res = await fetch('/api/user/signout', { method: 'POST' });
       const data = await res.json();
       if (!res.ok) {
         console.log(data.message);
@@ -49,52 +47,51 @@ export default function Header() {
   };
 
   return (
-    <Navbar className='border-b-2'>
-      <Link
-        to='/'
-        className='self-center whitespace-nowrap text-sm sm:text-xl font-semibold dark:text-white'
-      >
+    <Navbar className="border-b-2 px-4 md:px-8">
+      {/* Logo only */}
+      
+      <Link to="/" className="flex items-center self-center">
         <img
           src="https://i.postimg.cc/G2wn9kKH/dark.png"
           alt="Trinetra Post Logo"
-          className="h-20 w-auto object-contain" />
-
+          className="h-12 w-auto object-contain scale-150"
+        />
       </Link>
-      <form onSubmit={handleSubmit}>
+
+
+      {/* Search bar - desktop */}
+      <form onSubmit={handleSubmit} className="hidden lg:block flex-1 mx-6">
         <TextInput
-          type='text'
-          placeholder='Search...'
+          type="text"
+          placeholder="Search..."
           rightIcon={AiOutlineSearch}
-          className='hidden lg:inline'
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
+          className="w-[250px] xl:w-[400px] mx-auto"
         />
       </form>
-      <Button className='w-12 h-10 lg:hidden' color='gray' pill>
-        <AiOutlineSearch />
-      </Button>
-      <div className='flex gap-2 md:order-2'>
+
+      <div className="flex items-center gap-3 md:order-2 ml-3">
+        {/* Theme toggle */}
         <Button
-          className='w-12 h-10 hidden sm:inline'
-          color='gray'
+          className="w-10 h-10  flex items-center justify-center"
+          color="gray"
           pill
           onClick={() => dispatch(toggleTheme())}
         >
           {theme === 'light' ? <FaSun /> : <FaMoon />}
         </Button>
+
+        {/* User dropdown / sign in */}
         {currentUser ? (
           <Dropdown
             arrowIcon={false}
             inline
-            label={
-              <Avatar alt='user' img={currentUser.profilePicture} rounded />
-            }
+            label={<Avatar alt="user" img={currentUser.profilePicture} rounded />}
           >
             <Dropdown.Header>
-              <span className='block text-sm'>@{currentUser.username}</span>
-              <span className='block text-sm font-medium truncate'>
-                {currentUser.email}
-              </span>
+              <span className="block text-sm">@{currentUser.username}</span>
+              <span className="block text-sm font-medium truncate">{currentUser.email}</span>
             </Dropdown.Header>
             <Link to={'/dashboard?tab=profile'}>
               <Dropdown.Item>Profile</Dropdown.Item>
@@ -103,24 +100,40 @@ export default function Header() {
             <Dropdown.Item onClick={handleSignout}>Sign out</Dropdown.Item>
           </Dropdown>
         ) : (
-          <Link to='/sign-in'>
-            <Button gradientDuoTone='purpleToBlue' outline>
+          <Link to="/sign-in">
+            <Button gradientDuoTone="purpleToBlue" outline>
               Sign In
             </Button>
           </Link>
         )}
+
+        {/* Mobile menu toggle */}
         <Navbar.Toggle />
       </div>
+
+      {/* Mobile nav links */}
       <Navbar.Collapse>
         <Navbar.Link active={path === '/'} as={'div'}>
-          <Link to='/'>Home</Link>
+          <Link to="/">Home</Link>
         </Navbar.Link>
         <Navbar.Link active={path === '/about'} as={'div'}>
-          <Link to='/about'>About</Link>
+          <Link to="/about">About</Link>
         </Navbar.Link>
         <Navbar.Link active={path === '/projects'} as={'div'}>
-          <Link to='/projects'>Projects</Link>
+          <Link to="/projects">Projects</Link>
         </Navbar.Link>
+
+        {/* Search bar - mobile dropdown only */}
+        <form onSubmit={handleSubmit} className="block lg:hidden mt-3">
+          <TextInput
+            type="text"
+            placeholder="Search..."
+            rightIcon={AiOutlineSearch}
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="w-full"
+          />
+        </form>
       </Navbar.Collapse>
     </Navbar>
   );

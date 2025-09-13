@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import NepaliDate from "nepali-date-converter";
 
 export default function CallToAction() {
   const [gold, setGold] = useState({ tola: "-", tenGram: "-" });
@@ -11,6 +12,7 @@ export default function CallToAction() {
     icon: "",
   });
   const [error, setError] = useState(false);
+  const [nepaliDate, setNepaliDate] = useState("");
 
   // Fetch Gold, Silver, NEPSE
   const fetchData = async () => {
@@ -37,12 +39,11 @@ export default function CallToAction() {
       const res = await fetch(url);
       const data = await res.json();
 
-      // Safety check: make sure weather data exists
       if (!data.weather || !data.weather[0]) {
         console.error("Weather data missing", data);
         return;
       }
-      const condition = data.weather[0].main; // e.g., Clear, Clouds, Rain
+      const condition = data.weather[0].main;
       const icon = `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
 
       setWeather({
@@ -65,17 +66,42 @@ export default function CallToAction() {
         },
         (err) => {
           console.error("Geolocation error:", err);
-          // fallback location (Kathmandu)
-          fetchWeather(27.7172, 85.3240);
+          fetchWeather(27.7172, 85.3240); // Kathmandu fallback
         },
         { enableHighAccuracy: true }
       );
     } else {
-      // fallback location
       fetchWeather(27.7172, 85.3240);
     }
   };
 
+  // Set Nepali Date
+  useEffect(() => {
+    const today = new Date();
+    const nepDate = new NepaliDate(today);
+
+    const months = [
+      "Baisakh",
+      "Jestha",
+      "Ashadh",
+      "Shrawan",
+      "Bhadra",
+      "Ashoj",
+      "Kartik",
+      "Mangsir",
+      "Poush",
+      "Magh",
+      "Falgun",
+      "Chaitra",
+    ];
+
+    const year = nepDate.getYear();
+    const month = months[nepDate.getMonth()];
+    const day = nepDate.getDate();
+
+    const formattedDate = `${year} ${month} ${day}`;
+    setNepaliDate(formattedDate);
+  }, []);
 
   useEffect(() => {
     fetchData();
@@ -89,19 +115,24 @@ export default function CallToAction() {
 
   return (
     <div className="relative rounded-2xl shadow-xl p-5 max-w-5xl mx-auto border border-gray-200 dark:border-gray-700 transition-colors bg-white dark:bg-[rgb(16,23,42)]">
-      {/* Logo */}
-      <div className="flex justify-center mb-1">
+      {/* Logo + Nepali Date Row */}
+      <div className="flex justify-between items-center mb-1">
         <img
           src="https://i.postimg.cc/G2wn9kKH/dark.png"
           alt="Trinetra Post Logo"
           className="h-20 w-auto object-contain"
         />
+        <div className="text-right">
+          <p className="text-sm sm:text-base font-semibold text-gray-700 dark:text-gray-200">
+            {nepaliDate}
+          </p>
+        </div>
       </div>
 
       <hr className="border-gray-300 dark:border-gray-600 mb-4" />
 
       {/* LIVE badge */}
-      <div className="absolute top-3 left-3 animate-pulse">
+      <div className="absolute top-3 left-1/2 -translate-x-1/2 animate-pulse">
         <span className="bg-red-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow">
           LIVE
         </span>
